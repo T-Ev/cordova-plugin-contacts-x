@@ -243,9 +243,14 @@ import ContactsUI
             let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch as [NSString]);
             if(contacts.count == 1) {
                 return ContactX(contact: contacts.first!, options: options);
+            } else if(contacts.count > 1){
+                self.returnError(error: ErrorCodes.MultipleMatches);
+                return ContactX(contact: contacts.first!, options: options);
             }
+            self.returnError(error: ErrorCodes.NoMatches);
             return nil;
         } catch {
+            self.returnError(error: ErrorCodes.MatchFailed);
             return nil;
         }
     }
@@ -386,5 +391,8 @@ enum ErrorCodes:NSNumber {
     case NoContactFound = 5
     case SaveOrModify = 6
     case SecondDelete = 7
-    case UnknownError = 10
+    case MultipleMatches = 8
+    case NoMatches = 9
+    case MatchFailed = 10
+    case UnknownError = 11
 }
