@@ -5,6 +5,9 @@ var contactsX = {
     UnsupportedAction: 1,
     WrongJsonObject: 2,
     PermissionDenied: 3,
+    NoContactFound: 5,
+    SaveOrModify: 6,
+    SecondDelete: 7,
     UnknownError: 10
   },
 
