@@ -8,7 +8,10 @@ var contactsX = {
     NoContactFound: 5,
     SaveOrModify: 6,
     SecondDelete: 7,
-    UnknownError: 10
+    MultipleMatches: 8,
+    NoMatches: 9,
+    MatchFailed: 10,
+    UnknownError: 11
   },
 
   find: function (success, error, options) {
