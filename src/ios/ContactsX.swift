@@ -125,7 +125,7 @@ import ContactsUI
                     self.commandDelegate.send(result, callbackId: self._callbackId)
                 }
             }
-            self.returnError(error: ErrorCodes.UnknownError);
+            self.returnError(error: ErrorCodes.SaveOrModify);
         }
     }
     
@@ -267,7 +267,7 @@ import ContactsUI
             }
             let contact = self.findById(id: id!);
             if(contact == nil) {
-                self.returnError(error: ErrorCodes.UnknownError);
+                self.returnError(error: ErrorCodes.NoContactFound);
                 return;
             }
             
@@ -281,7 +281,7 @@ import ContactsUI
                 let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK);
                 self.commandDelegate.send(result, callbackId: self._callbackId)
            } catch {
-            self.returnError(error: ErrorCodes.UnknownError)
+            self.returnError(error: ErrorCodes.SecondDelete)
            }
         }
     }
@@ -383,5 +383,8 @@ enum ErrorCodes:NSNumber {
     case UnsupportedAction = 1
     case WrongJsonObject = 2
     case PermissionDenied = 3
+    case NoContactFound = 5
+    case SaveOrModify = 6
+    case SecondDelete = 7
     case UnknownError = 10
 }
