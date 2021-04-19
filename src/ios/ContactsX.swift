@@ -435,6 +435,6 @@ enum ErrorCodes:NSNumber {
     case NoMatches = 9
     case MatchFailed = 10
     case OtherMatchError = 11
-    case NoContactFound = 12
+    case NoNumberFound = 12
     case UnknownError = 13
 }
