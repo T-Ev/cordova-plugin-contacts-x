@@ -299,9 +299,7 @@ import ContactsUI
             
             let id = command.argument(at: 0) as! String?;
             let rawPhone = command.argument(at: 1) as! String?;
-            if(rawPhone != nil){
-                let phoneNumber = CNPhoneNumber(stringValue: rawPhone!)
-            } else {
+            if(rawPhone == nil){
                 self.returnError(error: ErrorCodes.NoNumberFound);
                 return;
             }
@@ -310,7 +308,7 @@ import ContactsUI
                 return;
             }
             //let contact = self.findById(id: id!);
-            let contact = self.findByNumber(number: phoneNumber);
+            let contact = self.findByNumber(number: CNPhoneNumber(stringValue: rawPhone!));
             if(contact == nil) {
                 self.returnError(error: ErrorCodes.NoContactFound);
                 return;
