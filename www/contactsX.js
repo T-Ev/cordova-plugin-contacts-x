@@ -11,7 +11,8 @@ var contactsX = {
     MultipleMatches: 8,
     NoMatches: 9,
     MatchFailed: 10,
-    UnknownError: 11
+    OtherMatchError: 11,
+    UnknownError: 12
   },
 
   find: function (success, error, options) {
