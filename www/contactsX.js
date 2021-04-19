@@ -27,8 +27,8 @@ var contactsX = {
     exec(success, error, 'ContactsX', 'save', [contact]);
   },
 
-  delete: function (id, success, error) {
-    exec(success, error, 'ContactsX', 'delete', [id]);
+  delete: function (id, phone, success, error) {
+    exec(success, error, 'ContactsX', 'delete', [id,phone]);
   },
 
   hasPermission: function (success, error) {
