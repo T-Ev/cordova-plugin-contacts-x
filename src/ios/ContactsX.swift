@@ -273,12 +273,12 @@ import ContactsUI
             if(contacts.count == 1) {
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count > 1){
-                self.returnError(error: ErrorCodes.MultipleMatches, message: number);
+                self.returnError(error: ErrorCodes.MultipleMatches);
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count == 0){
-                self.returnError(error: ErrorCodes.NoMatches, message: number);
+                self.returnError(error: ErrorCodes.NoMatches);
             } else {
-                self.returnError(error: ErrorCodes.OtherMatchError, message: number);
+                self.returnError(error: ErrorCodes.OtherMatchError);
             }
             return nil;
         } catch {
