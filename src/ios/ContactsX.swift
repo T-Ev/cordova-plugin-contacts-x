@@ -258,6 +258,35 @@ import ContactsUI
         }
     }
     
+    func findByNumber(number: CNPhoneNumber) -> ContactX? {
+        let options = ContactsXOptions.init(options: [
+            "fields": [
+                "phoneNumbers": true,
+                "emails": true
+            ]
+        ]);
+        let keysToFetch = self.getKeysToFetch(options: options);
+        let predicate = CNContact.predicateForContacts(matching: number);
+        let store = CNContactStore();
+        do {
+            let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: keysToFetch as [NSString]);
+            if(contacts.count == 1) {
+                return ContactX(contact: contacts.first!, options: options);
+            } else if(contacts.count > 1){
+                self.returnError(error: ErrorCodes.MultipleMatches, message: id);
+                return ContactX(contact: contacts.first!, options: options);
+            } else if(contacts.count == 0){
+                self.returnError(error: ErrorCodes.NoMatches, message: id);
+            } else {
+                self.returnError(error: ErrorCodes.OtherMatchError, message: id);
+            }
+            return nil;
+        } catch {
+            self.returnError(error: ErrorCodes.MatchFailed);
+            return nil;
+        }
+    }
+    
     @objc(delete:)
     func delete(command: CDVInvokedUrlCommand) {
         _callbackId = command.callbackId;
@@ -269,11 +298,19 @@ import ContactsUI
             }
             
             let id = command.argument(at: 0) as! String?;
+            let rawPhone = command.argument(at: 1) as! String?;
+            if(rawPhone != nil){
+                let phoneNumber = CNPhoneNumber(stringValue: rawPhone!)
+            } else {
+                self.returnError(error: ErrorCodes.NoNumberFound);
+                return;
+            }
             if(id == nil) {
                 self.returnError(error: ErrorCodes.WrongJsonObject);
                 return;
             }
-            let contact = self.findById(id: id!);
+            //let contact = self.findById(id: id!);
+            let contact = self.findByNumber(number: phoneNumber);
             if(contact == nil) {
                 self.returnError(error: ErrorCodes.NoContactFound);
                 return;
@@ -398,5 +435,6 @@ enum ErrorCodes:NSNumber {
     case NoMatches = 9
     case MatchFailed = 10
     case OtherMatchError = 11
-    case UnknownError = 12
+    case NoContactFound = 12
+    case UnknownError = 13
 }
