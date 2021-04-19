@@ -244,10 +244,13 @@ import ContactsUI
             if(contacts.count == 1) {
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count > 1){
-                self.returnError(error: ErrorCodes.MultipleMatches);
+                self.returnError(error: ErrorCodes.MultipleMatches, message: id);
                 return ContactX(contact: contacts.first!, options: options);
+            } else if(contacts.count == 0){
+                self.returnError(error: ErrorCodes.NoMatches, message: id);
+            } else {
+                self.returnError(error: ErrorCodes.OtherMatchError, message: id);
             }
-            self.returnError(error: ErrorCodes.NoMatches);
             return nil;
         } catch {
             self.returnError(error: ErrorCodes.MatchFailed);
@@ -394,5 +397,6 @@ enum ErrorCodes:NSNumber {
     case MultipleMatches = 8
     case NoMatches = 9
     case MatchFailed = 10
-    case UnknownError = 11
+    case OtherMatchError = 11
+    case UnknownError = 12
 }
