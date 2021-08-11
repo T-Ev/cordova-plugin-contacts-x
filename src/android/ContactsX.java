@@ -692,11 +692,13 @@ public class ContactsX extends CordovaPlugin {
 //                     }
 
                 } while (cur.moveToNext());
+                if(j > 1) returnError(ContactsXErrorCodes.MultipleContacts, String.valueOf(j));
                 LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
+                
             }
 
         } catch (Exception e) {
-            LOG.d(LOG_TAG, e.getStackTrace());
+            returnError(ContactsXErrorCodes.UnknownError, e.getStackTrace());
         } finally {
             cur.close();
         }
