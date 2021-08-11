@@ -643,7 +643,8 @@ public class ContactsX extends CordovaPlugin {
     }
 
     private void delete(JSONArray args) throws JSONException {
-        final String contactId = args.getString(0);
+        final String contactId = args.getString(1);
+        if(contactId.length() < 5) returnError(ContactsXErrorCodes.TooShort);
         this.cordova.getThreadPool().execute(() -> {
             if (performDelete(contactId)) {
                 _callbackContext.success();
@@ -653,7 +654,7 @@ public class ContactsX extends CordovaPlugin {
         });
     }
 
-    private boolean performDelete(String id) {
+    private boolean performDeleteOld(String id) {
         int result = 0;
         Cursor cursor = this.cordova.getActivity().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
                 null,
@@ -671,6 +672,34 @@ public class ContactsX extends CordovaPlugin {
 
         cursor.close();
 
+        return result > 0;
+    }
+    
+    private boolean performDelete(String phone) {
+        int result = 0;
+        Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
+        Cursor cur = this.cordova.getActivity().getContentResolver().query(contactUri, null, null, null, null);
+        try {
+            if (cur.moveToFirst()) {
+                int j = 0;
+                do {
+//                     if (cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME)).equalsIgnoreCase(name)) {
+                        String lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+                        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
+//                         this.cordova.getActivity().getContentResolver().delete(uri, null, null);
+                        j++;
+                        return true;
+//                     }
+
+                } while (cur.moveToNext());
+                LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
+            }
+
+        } catch (Exception e) {
+            LOG.d(LOG_TAG, e.getStackTrace());
+        } finally {
+            cur.close();
+        }
         return result > 0;
     }
 
