@@ -699,7 +699,7 @@ public class ContactsX extends CordovaPlugin {
             }
 
         } catch (Exception e) {
-            returnError(ContactsXErrorCodes.UnknownError, e.getStackTrace());
+            returnError(ContactsXErrorCodes.UnknownError, e.getStackTrace().toString());
         } finally {
             cur.close();
         }
