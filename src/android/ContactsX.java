@@ -680,8 +680,8 @@ public class ContactsX extends CordovaPlugin {
         Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(phone));
         Cursor cur = this.cordova.getActivity().getContentResolver().query(contactUri, null, null, null, null);
         try {
-            if (cur.moveToFirst()) {
-                int j = 0;
+            int j = 0;
+            if (cur.moveToFirst()) {                
                 do {
 //                     if (cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME)).equalsIgnoreCase(name)) {
                         String lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
@@ -692,12 +692,10 @@ public class ContactsX extends CordovaPlugin {
 //                     }
 
                 } while (cur.moveToNext());
-                if(j > 1) returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(j));
-                if(j == 0) returnError(ContactsXErrorCodes.NoMatches, String.valueOf(j));
-                LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
-                
             }
-
+            if(j > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(j))}
+            else if(j == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(j))}
+            LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
         } catch (Exception e) {
             returnError(ContactsXErrorCodes.UnknownError, e.getStackTrace().toString());
         } finally {
