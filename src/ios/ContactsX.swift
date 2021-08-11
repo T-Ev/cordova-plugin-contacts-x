@@ -244,7 +244,7 @@ import ContactsUI
             if(contacts.count == 1) {
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count > 1){
-                self.returnError(error: ErrorCodes.MultipleMatches, message: id);
+                /*self.returnError(error: ErrorCodes.MultipleMatches, message: id);*/
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count == 0){
                 self.returnError(error: ErrorCodes.NoMatches, message: id);
@@ -273,7 +273,7 @@ import ContactsUI
             if(contacts.count == 1) {
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count > 1){
-                self.returnError(error: ErrorCodes.MultipleMatches);
+                /* self.returnError(error: ErrorCodes.MultipleMatches); */
                 return ContactX(contact: contacts.first!, options: options);
             } else if(contacts.count == 0){
                 self.returnError(error: ErrorCodes.NoMatches);
