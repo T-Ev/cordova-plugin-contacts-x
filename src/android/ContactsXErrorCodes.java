@@ -6,6 +6,7 @@ public enum ContactsXErrorCodes {
     PermissionDenied(3),
     NoContactFound(4),
     MultipleMatches(8),
+    NoMatches(9),
     MatchFailed(10)
     UnknownError(13);
 
