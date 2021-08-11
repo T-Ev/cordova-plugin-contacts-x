@@ -7,7 +7,7 @@ public enum ContactsXErrorCodes {
     NoContactFound(4),
     MultipleMatches(8),
     NoMatches(9),
-    MatchFailed(10)
+    MatchFailed(10),
     UnknownError(13);
 
     public final int value;
