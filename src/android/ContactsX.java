@@ -644,7 +644,7 @@ public class ContactsX extends CordovaPlugin {
 
     private void delete(JSONArray args) throws JSONException {
         final String contactId = args.getString(1);
-        if(contactId.length() < 5) returnError(ContactsXErrorCodes.TooShort);
+        if(contactId.length() < 5) returnError(ContactsXErrorCodes.MatchFailed);
         this.cordova.getThreadPool().execute(() -> {
             if (performDelete(contactId)) {
                 _callbackContext.success();
@@ -692,7 +692,7 @@ public class ContactsX extends CordovaPlugin {
 //                     }
 
                 } while (cur.moveToNext());
-                if(j > 1) returnError(ContactsXErrorCodes.MultipleContacts, String.valueOf(j));
+                if(j > 1) returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(j));
                 LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
                 
             }
