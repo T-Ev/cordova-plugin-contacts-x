@@ -677,7 +677,7 @@ public class ContactsX extends CordovaPlugin {
     
     private boolean performDelete(String phone) {
         int result = 0;
-        Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phone));
+        Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(phone));
         Cursor cur = this.cordova.getActivity().getContentResolver().query(contactUri, null, null, null, null);
         try {
             if (cur.moveToFirst()) {
