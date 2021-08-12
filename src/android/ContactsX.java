@@ -688,7 +688,7 @@ public class ContactsX extends CordovaPlugin {
                         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
                         this.cordova.getActivity().getContentResolver().delete(uri, null, null);
                         j++;
-                        return true;
+//                         return true;
 //                     }
 
                 } while (cur.moveToNext());
