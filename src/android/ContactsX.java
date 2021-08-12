@@ -680,30 +680,28 @@ public class ContactsX extends CordovaPlugin {
         Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(phone));
         Cursor cur = this.cordova.getActivity().getContentResolver().query(contactUri, null, null, null, null);
         try {
-            int j = 0;
             if (cur.moveToFirst()) {                
                 do {
 //                     if (cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME)).equalsIgnoreCase(name)) {
                         String lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
                         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
                         this.cordova.getActivity().getContentResolver().delete(uri, null, null);
-                        j++;
 //                         return true;
 //                     }
 
                 } while (cur.moveToNext());
             }
             int L = cur.getCount();
-            if(L > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(L));}
-            else if(L == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(L));}
+//             if(L > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(L));}
+//             else if(L == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(L));}
 //             else { returnError(ContactsXErrorCodes.MatchFailed, String.valueOf(cur.getCount()));}            
             LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
         } catch (Exception e) {
-            returnError(ContactsXErrorCodes.UnknownError, e.getStackTrace().toString());
+            returnError(ContactsXErrorCodes.UnknownError, "Error when I tried to write");
         } finally {
             cur.close();
         }
-        return result > 0;
+        return L > 0;
     }
 
     private void hasPermission() throws JSONException {
