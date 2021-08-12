@@ -693,8 +693,8 @@ public class ContactsX extends CordovaPlugin {
 
                 } while (cur.moveToNext());
             }
-            if(j > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(j));}
-            else if(j == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(j));}
+            if(cur.getCount() > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(cur.getCount()));}
+            else if(cur.getCount() == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(cur.getCount()));}
             LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
         } catch (Exception e) {
             returnError(ContactsXErrorCodes.UnknownError, e.getStackTrace().toString());
