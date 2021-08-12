@@ -676,7 +676,7 @@ public class ContactsX extends CordovaPlugin {
     }
     
     private boolean performDelete(String phone) {
-        int result = 0;
+        int L = 0;
         Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(phone));
         Cursor cur = this.cordova.getActivity().getContentResolver().query(contactUri, null, null, null, null);
         try {
@@ -691,11 +691,10 @@ public class ContactsX extends CordovaPlugin {
 
                 } while (cur.moveToNext());
             }
-            int L = cur.getCount();
+            L = cur.getCount();
 //             if(L > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(L));}
 //             else if(L == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(L));}
-//             else { returnError(ContactsXErrorCodes.MatchFailed, String.valueOf(cur.getCount()));}            
-            LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
+//             else { returnError(ContactsXErrorCodes.MatchFailed, String.valueOf(cur.getCount()));}
         } catch (Exception e) {
             returnError(ContactsXErrorCodes.UnknownError, "Error when I tried to write");
         } finally {
