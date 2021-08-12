@@ -695,7 +695,7 @@ public class ContactsX extends CordovaPlugin {
             }
             int L = cur.getCount();
             if(L > 1){returnError(ContactsXErrorCodes.MultipleMatches, String.valueOf(L));}
-            else if(L == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(L)));}
+            else if(L == 0){ returnError(ContactsXErrorCodes.NoMatches, String.valueOf(L));}
 //             else { returnError(ContactsXErrorCodes.MatchFailed, String.valueOf(cur.getCount()));}            
             LOG.d(LOG_TAG, "Contacts Found: ".concat(String.valueOf(j)));
         } catch (Exception e) {
