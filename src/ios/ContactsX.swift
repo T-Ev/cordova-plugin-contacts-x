@@ -362,11 +362,25 @@ import ContactsUI
     func hasPermission(completionHandler: @escaping (_ accessGranted: Bool) -> Void, requestIfNotAvailable: Bool = false) {
         let store = CNContactStore();
         switch CNContactStore.authorizationStatus(for: .contacts) {
-                case .authorized:
+                case .authorized, .limited:
                     completionHandler(true)
                 case .denied:
                     completionHandler(false)
                 case .restricted, .notDetermined:
+                    if(requestIfNotAvailable) {
+                        store.requestAccess(for: .contacts) { granted, error in
+                            if granted {
+                                completionHandler(true)
+                            } else {
+                                DispatchQueue.main.async {
+                                    completionHandler(false)
+                                }
+                            }
+                        }
+                    } else {
+                        completionHandler(false)
+                    }
+                default:
                     if(requestIfNotAvailable) {
                         store.requestAccess(for: .contacts) { granted, error in
                             if granted {
